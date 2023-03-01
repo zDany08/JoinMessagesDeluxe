@@ -1,0 +1,6 @@
+name: JoinMessagesDeluxe
+main: net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe
+version: 1.0.0
+authors: [ zDany ]
+description: desc
+softdepend: [ PlaceholderAPI ]

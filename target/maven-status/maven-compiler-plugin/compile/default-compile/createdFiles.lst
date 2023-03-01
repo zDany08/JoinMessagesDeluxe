@@ -1,0 +1,5 @@
+net\zdany\joinmessagesdeluxe\JoinMessagesDeluxe.class
+net\zdany\joinmessagesdeluxe\listeners\Join.class
+net\zdany\joinmessagesdeluxe\listeners\Quit.class
+net\zdany\joinmessagesdeluxe\Reflection.class
+net\zdany\joinmessagesdeluxe\Format.class
