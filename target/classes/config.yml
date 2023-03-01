@@ -12,21 +12,44 @@
 #╚═════╝░╚══════╝╚══════╝░╚═════╝░╚═╝░░╚═╝╚══════╝
 
 join-messages:
-  join: '&2%player_name% &ajoined!'
-  quit: '&4%player_name% &cleft!'
-  player-join-message:
+  public:
+    join-quit:
+      enabled: true
+      join: '&2%player_name% &ajoined!'
+      quit: '&4%player_name% &cleft!'
+    first-join:
+      enabled: true
+      message: '&6%player_name% &ejoined the server for the first time!'
+  private:
+    join:
+      enabled: true
+      lines:
+        - '&6&m--------------------------------'
+        - '&eWelcome back to &5&lYourServer&e!'
+        - '&9&lDISCORD: &f&nDiscord Link'
+        - '&b&lTELEGRAM: &f&nTelegram Link'
+        - '&c&lYOUTUBE: &f&nYoutube Link'
+        - '&6&m--------------------------------'
+    first-join:
+      enabled: true
+      lines:
+        - '&6&m--------------------------------'
+        - '&eWelcome to &5&lYourServer&e!'
+        - '&9&lDISCORD: &f&nDiscord Link'
+        - '&b&lTELEGRAM: &f&nTelegram Link'
+        - '&c&lYOUTUBE: &f&nYoutube Link'
+        - '&6&m--------------------------------'
+  join-title:
     enabled: true
-    lines:
-      - '&6&m--------------------------------'
-      - '&eWelcome to &5&lYourServer&e!'
-      - '&6&lDISCORD: &f&nDiscord Link'
-      - '&b&lTELEGRAM: &f&nTelegram Link'
-      - '&c&lYOUTUBE: &f&nYoutube Link'
-      - '&6&m--------------------------------'
-  player-join-title:
-    enabled: true
-    title: '&5&lYourServer'
-    subtitle: '&7Welcome in our &fcommunity&7!'
-    fadeIn: 20
-    stay: 60
-    fadeOut: 20
+    join:
+      title: '&5&lYourServer'
+      subtitle: '&7Welcome back in our &fcommunity&7!'
+      fadeIn: 20
+      stay: 60
+      fadeOut: 20
+    first-join:
+      title: '&5&lYourServer'
+      subtitle: '&7Welcome in our &fcommunity&7!'
+      fadeIn: 20
+      stay: 60
+      fadeOut: 20

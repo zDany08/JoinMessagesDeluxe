@@ -19,22 +19,55 @@ public class Join implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.join"))));
-        sendPlayerJoinMessage(p);
-        sendPlayerJoinTitle(p);
+        if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
+            e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
+        }
+        sendPublicFirstJoinMessage(p);
+        sendPrivateJoinMessage(p);
+        sendPrivateFirstJoinMessage(p);
+        sendJoinTitle(p);
     }
 
-    private void sendPlayerJoinMessage(Player p) {
-        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.player-join-message.enabled")) return;
-        for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.player-join-message.lines")) {
+    private void sendPublicFirstJoinMessage(Player p) {
+        if(p.hasPlayedBefore()) return;
+        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.first-join.enabled")) return;
+        for(Player other : Bukkit.getOnlinePlayers()) {
+            other.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.first-join.message"))));
+        }
+    }
+
+    private void sendPrivateJoinMessage(Player p) {
+        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.join.enabled")) return;
+        for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.join.lines")) {
             p.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, line)));
         }
     }
 
-    private void sendPlayerJoinTitle(Player p) {
-        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.player-join-title.enabled")) return;
-        String title = JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.player-join-title.title"), subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.player-join-title.subtitle");
-        int fadeIn = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.player-join-title.fadeIn"), stay = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.player-join-title.stay"), fadeOut = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.player-join-title.fadeOut");
+    private void sendPrivateFirstJoinMessage(Player p) {
+        if(p.hasPlayedBefore()) return;
+        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.first-join.enabled")) return;
+        for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.first-join.lines")) {
+            p.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, line)));
+        }
+    }
+
+    private void sendJoinTitle(Player p) {
+        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.join-title.enabled")) return;
+        String title, subtitle;
+        int fadeIn, stay, fadeOut;
+        if(!p.hasPlayedBefore()) {
+            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.first-join.title")));
+            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.first-join.subtitle")));
+            fadeIn = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.fadeIn");
+            stay = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.stay");
+            fadeOut = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.fadeOut");
+        }else {
+            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.join.title")));
+            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.join.subtitle")));
+            fadeIn = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.fadeIn");
+            stay = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.stay");
+            fadeOut = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.fadeOut");
+        }
         if(JoinMessagesDeluxe.getInstance().getVersion() >= 10) {
             p.sendTitle(Format.getColor(PlaceholderAPI.setPlaceholders(p, title)), Format.getColor(PlaceholderAPI.setPlaceholders(p, subtitle)), fadeIn, stay, fadeOut);
         }else {
