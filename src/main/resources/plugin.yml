@@ -1,6 +1,40 @@
 name: JoinMessagesDeluxe
 main: net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe
-version: 1.1.0
+version: 1.1.1
 authors: [ zDany ]
 description: Adds customizable join features.
 softdepend: [ PlaceholderAPI ]
+permissions:
+  joinmessagesdeluxe.*:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+    children:
+      joinmessagesdeluxe.public.join-quit: true
+      joinmessagesdeluxe.public.first-join: true
+      joinmessagesdeluxe.private.join: true
+      joinmessagesdeluxe.private.first-join: true
+      joinmessagesdeluxe.join-title: true
+  joinmessagesdeluxe.all:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+    children:
+      joinmessagesdeluxe.public.join-quit: true
+      joinmessagesdeluxe.public.first-join: true
+      joinmessagesdeluxe.private.join: true
+      joinmessagesdeluxe.private.first-join: true
+      joinmessagesdeluxe.join-title: true
+  joinmessagesdeluxe.public.join-quit:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+  joinmessagesdeluxe.public.first-join:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+  joinmessagesdeluxe.private.join:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+  joinmessagesdeluxe.private.first-join:
+    description: Permission of JoinMessagesDeluxe
+    default: op
+  joinmessagesdeluxe.join-title:
+    description: Permission of JoinMessagesDeluxe
+    default: op

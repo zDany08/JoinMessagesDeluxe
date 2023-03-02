@@ -19,13 +19,23 @@ public class Join implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
-            e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
+        if(p.hasPermission("joinmessagesdeluxe.public.join-quit")) {
+            if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
+                e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
+            }
         }
-        sendPublicFirstJoinMessage(p);
-        sendPrivateJoinMessage(p);
-        sendPrivateFirstJoinMessage(p);
-        sendJoinTitle(p);
+        if(p.hasPermission("joinmessagesdeluxe.public.first-join")) {
+            sendPublicFirstJoinMessage(p);
+        }
+        if(p.hasPermission("joinmessagesdeluxe.private.join")) {
+            sendPrivateJoinMessage(p);
+        }
+        if(p.hasPermission("joinmessagesdeluxe.private.first-join")) {
+            sendPrivateFirstJoinMessage(p);
+        }
+        if(p.hasPermission("joinmessagesdeluxe.join-title")) {
+            sendJoinTitle(p);
+        }
     }
 
     private void sendPublicFirstJoinMessage(Player p) {
