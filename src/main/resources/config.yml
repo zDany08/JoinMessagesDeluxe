@@ -11,6 +11,20 @@
 #██████╔╝███████╗███████╗╚██████╔╝██╔╝╚██╗███████╗
 #╚═════╝░╚══════╝╚══════╝░╚═════╝░╚═╝░░╚═╝╚══════╝
 
+join-commands:
+  enabled: false
+  join:
+    givebedrock:
+      cmd: 'give %player_name% bedrock 1'
+      executor: 'C' # C = The command will be executed by Console; P = The command will be executed by Player
+    readrules:
+      cmd: 'rules'
+      executor: 'P'
+  quit:
+    clearinv:
+      cmd: 'clear %player_name%'
+      executor: 'C'
+
 join-messages:
   public:
     join-quit:

@@ -5,6 +5,7 @@ import net.zdany.joinmessagesdeluxe.Format;
 import net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe;
 import net.zdany.joinmessagesdeluxe.Reflection;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,21 +25,15 @@ public class Join implements Listener {
                 e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
             }
         }
-        if(p.hasPermission("joinmessagesdeluxe.public.first-join")) {
-            sendPublicFirstJoinMessage(p);
-        }
-        if(p.hasPermission("joinmessagesdeluxe.private.join")) {
-            sendPrivateJoinMessage(p);
-        }
-        if(p.hasPermission("joinmessagesdeluxe.private.first-join")) {
-            sendPrivateFirstJoinMessage(p);
-        }
-        if(p.hasPermission("joinmessagesdeluxe.join-title")) {
-            sendJoinTitle(p);
-        }
+        sendPublicFirstJoinMessage(p);
+        sendPrivateJoinMessage(p);
+        sendPrivateFirstJoinMessage(p);
+        sendJoinTitle(p);
+        sendJoinCommands(p);
     }
 
     private void sendPublicFirstJoinMessage(Player p) {
+        if(!p.hasPermission("joinmessagesdeluxe.public.first-join")) return;
         if(p.hasPlayedBefore()) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.first-join.enabled")) return;
         for(Player other : Bukkit.getOnlinePlayers()) {
@@ -47,6 +42,7 @@ public class Join implements Listener {
     }
 
     private void sendPrivateJoinMessage(Player p) {
+        if(!p.hasPermission("joinmessagesdeluxe.private.join")) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.join.enabled")) return;
         for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.join.lines")) {
             p.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, line)));
@@ -54,6 +50,7 @@ public class Join implements Listener {
     }
 
     private void sendPrivateFirstJoinMessage(Player p) {
+        if(!p.hasPermission("joinmessagesdeluxe.private.first-join")) return;
         if(p.hasPlayedBefore()) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.first-join.enabled")) return;
         for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.first-join.lines")) {
@@ -62,6 +59,7 @@ public class Join implements Listener {
     }
 
     private void sendJoinTitle(Player p) {
+        if(!p.hasPermission("joinmessagesdeluxe.join-title")) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.join-title.enabled")) return;
         String title, subtitle;
         int fadeIn, stay, fadeOut;
@@ -107,6 +105,25 @@ public class Join implements Listener {
             Reflection.sendPacket(p, subtitlePacket);
         }catch(Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "Error while sending a packet subtitle to \"" + p.getName() + "\": " + e);
+        }
+    }
+
+    private void sendJoinCommands(Player p) {
+        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-commands.enabled")) return;
+        if(!p.hasPermission("joinmessagesdeluxe.join-commands.join")) return;
+        for(String key : JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.join").getKeys(false)) {
+            ConfigurationSection cmd = JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.join." + key);
+            switch(cmd.getString("executor")) {
+                case "C":
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    break;
+                case "P":
+                    p.chat("/" + PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    break;
+                default:
+                    Bukkit.getLogger().log(Level.SEVERE, "\"join-commands -> join -> " + key + " -> executor\" must be \"C\" or \"P\"!");
+                    break;
+            }
         }
     }
 }
