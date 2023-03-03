@@ -22,7 +22,7 @@ public class Join implements Listener {
         Player p = e.getPlayer();
         if(p.hasPermission("joinmessagesdeluxe.public.join-quit")) {
             if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
-                e.setJoinMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
+                e.setJoinMessage(Format.getColor(Format.getPAPI(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.join"))));
             }
         }
         sendPublicFirstJoinMessage(p);
@@ -37,7 +37,7 @@ public class Join implements Listener {
         if(p.hasPlayedBefore()) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.first-join.enabled")) return;
         for(Player other : Bukkit.getOnlinePlayers()) {
-            other.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.first-join.message"))));
+            other.sendMessage(Format.getColor(Format.getPAPI(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.first-join.message"))));
         }
     }
 
@@ -45,7 +45,7 @@ public class Join implements Listener {
         if(!p.hasPermission("joinmessagesdeluxe.private.join")) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.join.enabled")) return;
         for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.join.lines")) {
-            p.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, line)));
+            p.sendMessage(Format.getColor(Format.getPAPI(p, line)));
         }
     }
 
@@ -54,7 +54,7 @@ public class Join implements Listener {
         if(p.hasPlayedBefore()) return;
         if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.private.first-join.enabled")) return;
         for(String line : JoinMessagesDeluxe.getInstance().getConfig().getStringList("join-messages.private.first-join.lines")) {
-            p.sendMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, line)));
+            p.sendMessage(Format.getColor(Format.getPAPI(p, line)));
         }
     }
 
@@ -64,20 +64,20 @@ public class Join implements Listener {
         String title, subtitle;
         int fadeIn, stay, fadeOut;
         if(!p.hasPlayedBefore()) {
-            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.first-join.title")));
-            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.first-join.subtitle")));
+            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(Format.getPAPI(p, "join-messages.join-title.first-join.title")));
+            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(Format.getPAPI(p, "join-messages.join-title.first-join.subtitle")));
             fadeIn = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.fadeIn");
             stay = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.stay");
             fadeOut = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.first-join.fadeOut");
         }else {
-            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.join.title")));
-            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(PlaceholderAPI.setPlaceholders(p, "join-messages.join-title.join.subtitle")));
+            title = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(Format.getPAPI(p, "join-messages.join-title.join.title")));
+            subtitle = JoinMessagesDeluxe.getInstance().getConfig().getString(Format.getColor(Format.getPAPI(p, "join-messages.join-title.join.subtitle")));
             fadeIn = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.fadeIn");
             stay = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.stay");
             fadeOut = JoinMessagesDeluxe.getInstance().getConfig().getInt("join-messages.join-title.join.fadeOut");
         }
         if(JoinMessagesDeluxe.getInstance().getVersion() >= 10) {
-            p.sendTitle(Format.getColor(PlaceholderAPI.setPlaceholders(p, title)), Format.getColor(PlaceholderAPI.setPlaceholders(p, subtitle)), fadeIn, stay, fadeOut);
+            p.sendTitle(Format.getColor(Format.getPAPI(p, title)), Format.getColor(Format.getPAPI(p, subtitle)), fadeIn, stay, fadeOut);
         }else {
             sendPacketTitle(p, title, fadeIn, stay, fadeOut);
             sendPacketSubtitle(p, subtitle, fadeIn, stay, fadeOut);
@@ -87,7 +87,7 @@ public class Join implements Listener {
     private void sendPacketTitle(Player p, String title, int fadeIn, int stay, int fadeOut) {
         try {
             Object enumTitle = Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-            Object titleFormat = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + Format.getColor(PlaceholderAPI.setPlaceholders(p, title)) + "\"}");
+            Object titleFormat = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + Format.getColor(Format.getPAPI(p, title)) + "\"}");
             Constructor<?> titleConstructor = Reflection.getNMSClass("PacketPlayOutTitle").getConstructor(Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], Reflection.getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
             Object titlePacket = titleConstructor.newInstance(enumTitle, titleFormat, fadeIn, stay, fadeOut);
             Reflection.sendPacket(p, titlePacket);
@@ -99,7 +99,7 @@ public class Join implements Listener {
     private void sendPacketSubtitle(Player p, String subtitle, int fadeIn, int stay, int fadeOut) {
         try {
             Object enumSubtitle = Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null);
-            Object subtitleFormat = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + Format.getColor(PlaceholderAPI.setPlaceholders(p, subtitle)) + "\"}");
+            Object subtitleFormat = Reflection.getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + Format.getColor(Format.getPAPI(p, subtitle)) + "\"}");
             Constructor<?> subtitleConstructor = Reflection.getNMSClass("PacketPlayOutTitle").getConstructor(Reflection.getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0], Reflection.getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
             Object subtitlePacket = subtitleConstructor.newInstance(enumSubtitle, subtitleFormat, fadeIn, stay, fadeOut);
             Reflection.sendPacket(p, subtitlePacket);
@@ -115,10 +115,10 @@ public class Join implements Listener {
             ConfigurationSection cmd = JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.join." + key);
             switch(cmd.getString("executor")) {
                 case "C":
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Format.getPAPI(p, cmd.getString("cmd")));
                     break;
                 case "P":
-                    p.chat("/" + PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    p.chat("/" + Format.getPAPI(p, cmd.getString("cmd")));
                     break;
                 default:
                     Bukkit.getLogger().log(Level.SEVERE, "\"join-commands -> join -> " + key + " -> executor\" must be \"C\" or \"P\"!");

@@ -1,6 +1,6 @@
 name: JoinMessagesDeluxe
 main: net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe
-version: 1.2.0
+version: 1.2.1
 authors: [ zDany ]
 description: Adds customizable join features.
 softdepend: [ PlaceholderAPI ]
