@@ -20,7 +20,7 @@ public class Quit implements Listener {
         Player p = e.getPlayer();
         if(p.hasPermission("joinmessagesdeluxe.public.join-quit")) {
             if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
-                e.setQuitMessage(Format.getColor(PlaceholderAPI.setPlaceholders(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.quit"))));
+                e.setQuitMessage(Format.getColor(Format.getPAPI(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.quit"))));
             }
         }
         sendQuitCommands(p);
@@ -33,10 +33,10 @@ public class Quit implements Listener {
             ConfigurationSection cmd = JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.quit." + key);
             switch(cmd.getString("executor")) {
                 case "C":
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Format.getPAPI(p, cmd.getString("cmd")));
                     break;
                 case "P":
-                    p.chat("/" + PlaceholderAPI.setPlaceholders(p, cmd.getString("cmd")));
+                    p.chat("/" + Format.getPAPI(p, cmd.getString("cmd")));
                     break;
                 default:
                     Bukkit.getLogger().log(Level.SEVERE, "\"join-commands -> quit -> " + key + " -> executor\" must be \"C\" or \"P\"!");
