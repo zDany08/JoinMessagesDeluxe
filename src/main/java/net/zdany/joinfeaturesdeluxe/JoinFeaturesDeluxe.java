@@ -1,14 +1,14 @@
-package net.zdany.joinmessagesdeluxe;
+package net.zdany.joinfeaturesdeluxe;
 
-import net.zdany.joinmessagesdeluxe.listeners.Join;
-import net.zdany.joinmessagesdeluxe.listeners.Quit;
+import net.zdany.joinfeaturesdeluxe.listeners.Join;
+import net.zdany.joinfeaturesdeluxe.listeners.Quit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class JoinMessagesDeluxe extends JavaPlugin {
+public class JoinFeaturesDeluxe extends JavaPlugin {
 
-    private static JoinMessagesDeluxe instance;
+    private static JoinFeaturesDeluxe instance;
 
     @Override
     public void onEnable() {
@@ -49,7 +49,7 @@ public class JoinMessagesDeluxe extends JavaPlugin {
         return Integer.valueOf(release);
     }
 
-    public static JoinMessagesDeluxe getInstance() {
+    public static JoinFeaturesDeluxe getInstance() {
         return instance;
     }
 }

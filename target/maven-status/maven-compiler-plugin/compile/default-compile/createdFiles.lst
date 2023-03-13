@@ -1,5 +1,5 @@
-net\zdany\joinmessagesdeluxe\JoinMessagesDeluxe.class
-net\zdany\joinmessagesdeluxe\listeners\Join.class
-net\zdany\joinmessagesdeluxe\listeners\Quit.class
-net\zdany\joinmessagesdeluxe\Reflection.class
-net\zdany\joinmessagesdeluxe\Format.class
+net\zdany\joinfeaturesdeluxe\Reflection.class
+net\zdany\joinfeaturesdeluxe\listeners\Join.class
+net\zdany\joinfeaturesdeluxe\JoinFeaturesDeluxe.class
+net\zdany\joinfeaturesdeluxe\Format.class
+net\zdany\joinfeaturesdeluxe\listeners\Quit.class

@@ -1,4 +1,4 @@
-package net.zdany.joinmessagesdeluxe;
+package net.zdany.joinfeaturesdeluxe;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
