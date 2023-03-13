@@ -1,4 +1,4 @@
-package net.zdany.joinmessagesdeluxe;
+package net.zdany.joinfeaturesdeluxe;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,7 +9,7 @@ public class Reflection {
 
     public static Class<?> getNMSClass(String name) {
         try {
-            return Class.forName("net.minecraft.server." + JoinMessagesDeluxe.getInstance().getStrVersion() + "." + name);
+            return Class.forName("net.minecraft.server." + JoinFeaturesDeluxe.getInstance().getStrVersion() + "." + name);
         }catch(Exception e) {
             Bukkit.getLogger().log(Level.SEVERE, "Error while getting the NMS class \"" + name + "\": " + e);
             return null;

@@ -1,48 +1,48 @@
-name: JoinMessagesDeluxe
-main: net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe
-version: 1.2.1
+name: JoinFeaturesDeluxe
+main: net.zdany.joinfeaturesdeluxe.JoinFeaturesDeluxe
+version: 1.2.2
 authors: [ zDany ]
 description: Adds customizable join features.
 softdepend: [ PlaceholderAPI ]
 permissions:
-  joinmessagesdeluxe.*:
+  joinfeaturesdeluxe.*:
     description: Permission of JoinMessagesDeluxe
     default: op
     children:
-      joinmessagesdeluxe.public.join-quit: true
-      joinmessagesdeluxe.public.first-join: true
-      joinmessagesdeluxe.private.join: true
-      joinmessagesdeluxe.private.first-join: true
-      joinmessagesdeluxe.join-title: true
-  joinmessagesdeluxe.all:
+      joinfeaturesdeluxe.public.join-quit: true
+      joinfeaturesdeluxe.public.first-join: true
+      joinfeaturesdeluxe.private.join: true
+      joinfeaturesdeluxe.private.first-join: true
+      joinfeaturesdeluxe.join-title: true
+  joinfeaturesdeluxe.all:
     description: Permission of JoinMessagesDeluxe
     default: op
     children:
-      joinmessagesdeluxe.public.join-quit: true
-      joinmessagesdeluxe.public.first-join: true
-      joinmessagesdeluxe.private.join: true
-      joinmessagesdeluxe.private.first-join: true
-      joinmessagesdeluxe.join-title: true
-      joinmessagesdeluxe.join-commands.join: true
-      joinmessagesdeluxe.join-commands.quit: true
-  joinmessagesdeluxe.public.join-quit:
+      joinfeaturesdeluxe.public.join-quit: true
+      joinfeaturesdeluxe.public.first-join: true
+      joinfeaturesdeluxe.private.join: true
+      joinfeaturesdeluxe.private.first-join: true
+      joinfeaturesdeluxe.join-title: true
+      joinfeaturesdeluxe.join-commands.join: true
+      joinfeaturesdeluxe.join-commands.quit: true
+  joinfeaturesdeluxe.public.join-quit:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.public.first-join:
+  joinfeaturesdeluxe.public.first-join:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.private.join:
+  joinfeaturesdeluxe.private.join:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.private.first-join:
+  joinfeaturesdeluxe.private.first-join:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.join-title:
+  joinfeaturesdeluxe.join-title:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.join-commands.join:
+  joinfeaturesdeluxe.join-commands.join:
     description: Permission of JoinMessagesDeluxe
     default: op
-  joinmessagesdeluxe.join-commands.quit:
+  joinfeaturesdeluxe.join-commands.quit:
     description: Permission of JoinMessagesDeluxe
     default: op

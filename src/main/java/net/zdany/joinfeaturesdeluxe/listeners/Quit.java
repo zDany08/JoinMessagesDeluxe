@@ -1,8 +1,7 @@
-package net.zdany.joinmessagesdeluxe.listeners;
+package net.zdany.joinfeaturesdeluxe.listeners;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.zdany.joinmessagesdeluxe.Format;
-import net.zdany.joinmessagesdeluxe.JoinMessagesDeluxe;
+import net.zdany.joinfeaturesdeluxe.Format;
+import net.zdany.joinfeaturesdeluxe.JoinFeaturesDeluxe;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,19 +17,19 @@ public class Quit implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        if(p.hasPermission("joinmessagesdeluxe.public.join-quit")) {
-            if(JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
-                e.setQuitMessage(Format.getColor(Format.getPAPI(p, JoinMessagesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.quit"))));
+        if(p.hasPermission("joinfeaturesdeluxe.public.join-quit")) {
+            if(JoinFeaturesDeluxe.getInstance().getConfig().getBoolean("join-messages.public.join-quit.enabled")) {
+                e.setQuitMessage(Format.getColor(Format.getPAPI(p, JoinFeaturesDeluxe.getInstance().getConfig().getString("join-messages.public.join-quit.quit"))));
             }
         }
         sendQuitCommands(p);
     }
 
     private void sendQuitCommands(Player p) {
-        if(!JoinMessagesDeluxe.getInstance().getConfig().getBoolean("join-commands.enabled")) return;
-        if(!p.hasPermission("joinmessagesdeluxe.join-commands.quit")) return;
-        for(String key : JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.quit").getKeys(false)) {
-            ConfigurationSection cmd = JoinMessagesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.quit." + key);
+        if(!JoinFeaturesDeluxe.getInstance().getConfig().getBoolean("join-commands.enabled")) return;
+        if(!p.hasPermission("joinfeaturesdeluxe.join-commands.quit")) return;
+        for(String key : JoinFeaturesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.quit").getKeys(false)) {
+            ConfigurationSection cmd = JoinFeaturesDeluxe.getInstance().getConfig().getConfigurationSection("join-commands.quit." + key);
             switch(cmd.getString("executor")) {
                 case "C":
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Format.getPAPI(p, cmd.getString("cmd")));
